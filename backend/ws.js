@@ -6,7 +6,7 @@ const wsServer = new WebSocketServer({
 
 wsServer.on('connection', wb => {
     wb.on('message', data => {
-        wb.send(data.toString.toUpperCase());
+        wb.send(data.toString().toUpperCase());
     });
 
     wb.on('error', error => console.error(error.message));

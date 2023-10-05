@@ -1,20 +1,19 @@
 // import * as THREE from 'three';
 
-(async () => {
-    let wsConfig;
-    try {
-        wsConfig = await fetch('ws-config');
-    } catch (e) {
-        console.log(`Couldn't get WS config: ${e.message}`);
-    }
+const wsUrl = 'ws://127.0.0.1:8181';
+const ws = new WebSocket(wsUrl);
     
-    const ws = new WebSocket(url);
+ws.onopen = event => {
+    ws.send('Hola');
     
-    ws.onopen = event => {
-        console.log(event)
-        ws.send('Hola');
-    }
-    
-    ws.onmessage(data => console.log(data))
+    btn.addEventListener('click', () => {
+        ws.send(new Date().toTimeString());
+    });
+}
 
-});
+ws.onmessage = msg => {
+    const data = msg.data;
+    document.getElementById('contenedor').innerHTML += `${data}<br>`;
+};
+
+const btn = document.getElementById('btn');
